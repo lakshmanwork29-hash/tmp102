@@ -1,0 +1,13 @@
+#define TMP102_MODE_BIT          0x0001u
+#define TMP102_SIGN_BIT          0x8000u
+
+#define TMP102_NORMAL_SHIFT      4
+#define TMP102_EXTENDED_SHIFT    3
+
+#define TMP102_NORMAL_MASK       0x0FFFu
+#define TMP102_EXTENDED_MASK     0x1FFFu
+
+#define TMP102_TEMP_RESOLUTION   0.0625f
+
+
+
