@@ -9,19 +9,22 @@ float tmp102_raw_to_celsius(uint16_t reg){
 	
    int16_t raw = reg;
 
+   // Check whether extended mode is enabled
     if (raw & TMP102_MODE_BIT) {
-        raw = (reg >> TMP102_EXTENDED_SHIFT) & TMP102_EXTENDED_MASK;
-
+        raw = (reg >> TMP102_EXTENDED_SHIFT) & TMP102_EXTENDED_MASK;   // Extract the temperature bits in extended mode.
+   
+		// Check the sign bit to determine whether the temperature is negative
         if (reg & TMP102_SIGN_BIT) {
             raw = ~raw;
-            raw = (raw & TMP102_EXTENDED_MASK) + 1;
+            raw = (raw & TMP102_EXTENDED_MASK) + 1;  // 2s complement 
             return -(float)raw * TMP102_TEMP_RESOLUTION;
         }
 
         return (float)raw * TMP102_TEMP_RESOLUTION;
     }
+	// Decode temperature in normal mode 
     else {
-        raw = (reg >> TMP102_NORMAL_SHIFT) & TMP102_NORMAL_MASK;
+        raw = (reg >> TMP102_NORMAL_SHIFT) & TMP102_NORMAL_MASK;   // Extract the temperature bits in normal mode.
 
         if (reg & TMP102_SIGN_BIT) {
             raw = ~raw;
